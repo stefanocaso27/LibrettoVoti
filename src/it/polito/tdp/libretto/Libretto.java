@@ -101,4 +101,29 @@ public class Libretto {
 		return this.voti.toString();
 	}
 	
+	public Libretto librettoMigliorato() {
+		Libretto nuovo = new Libretto();
+		for(Voto v : this.voti) {
+			nuovo.add(v.clone());
+		}
+		for(Voto v : nuovo.voti) {
+			int punti = v.getPunti();
+			if(punti < 24)
+				punti ++;
+			else if(punti <= 28)
+				punti = punti + 2;
+			v.setPunti(punti);
+		}
+		return nuovo;
+	}
+	
+	public void cancellaVotiScarsi() {
+		List <Voto> cancellare = new ArrayList<Voto>();
+		
+		for(Voto v : this.voti) {
+			if(v.getPunti() < 24)
+				cancellare.add(v);  //modificare collezione solo se non la sto iterando
+		}
+		this.voti.removeAll(cancellare);
+	}
 }
